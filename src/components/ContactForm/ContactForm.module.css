@@ -1,0 +1,23 @@
+.form {
+  border: 2px solid black;
+  width: 250px;
+  height: 150px;
+  padding: 10px;
+}
+
+.label {
+  display: block;
+  margin-bottom: 5px;
+  text-transform: capitalize;
+}
+
+.input {
+  margin-bottom: 10px;
+  width: 200px;
+  height: 20px;
+}
+
+.button {
+  display: block;
+  padding: 5px;
+}
