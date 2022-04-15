@@ -2,12 +2,26 @@ import { Component } from 'react';
 import ContactForm from 'components/ContactForm/ContactForm';
 import ContactList from 'components/ContactList/ContactList';
 import Filter from 'components/Filter/Filter';
+import { get, save, contactKey } from 'components/localStorage/localStorage';
 
 class App extends Component {
   state = {
     contacts: [],
     filter: '',
   };
+
+  async componentDidMount() {
+    const dataBase = await get(contactKey);
+    if (dataBase) {
+      this.setState({
+        contacts: dataBase,
+      });
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    save(contactKey, this.state.contacts);
+  }
 
   addContact = (contact, form) => {
     const ifName = this.state.contacts.find(
