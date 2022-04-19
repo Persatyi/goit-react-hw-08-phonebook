@@ -14,14 +14,6 @@ const get = key => {
   }
 };
 
-const remove = key => {
-  try {
-    return localStorage.removeItem(key);
-  } catch (error) {
-    return null;
-  }
-};
-
 const contactKey = 'contacts';
 
-export { get, save, remove, contactKey };
+export { get, save, contactKey };

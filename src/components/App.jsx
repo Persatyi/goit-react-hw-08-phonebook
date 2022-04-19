@@ -1,30 +1,26 @@
-import { Component } from 'react';
+import { useState, useEffect } from 'react';
 import ContactForm from 'components/ContactForm/ContactForm';
 import ContactList from 'components/ContactList/ContactList';
 import Filter from 'components/Filter/Filter';
 import { get, save, contactKey } from 'components/localStorage/localStorage';
 
-class App extends Component {
-  state = {
-    contacts: [],
-    filter: '',
-  };
+export default function App() {
+  const [contacts, setContacts] = useState([]);
+  const [filter, setFilter] = useState('');
 
-  async componentDidMount() {
-    const dataBase = await get(contactKey);
+  useEffect(() => {
+    const dataBase = get(contactKey);
     if (dataBase) {
-      this.setState({
+      setContacts({
         contacts: dataBase,
       });
     }
-  }
 
-  componentDidUpdate(prevProps, prevState) {
-    save(contactKey, this.state.contacts);
-  }
+    save(contactKey, contacts);
+  }, []);
 
-  addContact = (contact, form) => {
-    const ifName = this.state.contacts.find(
+  const addContact = (contact, form) => {
+    const ifName = contacts.find(
       el => el.name.toLowerCase() === contact.name.toLowerCase()
     );
 
@@ -42,51 +38,42 @@ class App extends Component {
       return;
     }
 
-    this.setState(prev => ({
-      contacts: [...prev.contacts, contact],
+    setContacts(prev => ({
+      contacts: [...prev, contact],
     }));
 
     form();
   };
 
-  findTarget = () => {
-    return this.state.contacts.filter(el =>
-      el.name.toLowerCase().includes(this.state.filter)
-    );
+  const findTarget = () => {
+    return contacts.filter(el => el.name.toLowerCase().includes(filter));
   };
 
-  changeFilter = word => {
-    this.setState({
+  const changeFilter = word => {
+    setFilter({
       filter: word,
     });
   };
 
-  deleteItem = e => {
+  const deleteItem = e => {
     const id = e.target.id;
-    const newList = this.state.contacts.filter(el => el.id !== id);
-    this.setState({
+    const newList = contacts.filter(el => el.id !== id);
+    setContacts({
       contacts: newList,
     });
   };
 
-  render() {
-    return (
-      <div
-        style={{
-          padding: '10px',
-        }}
-      >
-        <h1>Phonebook</h1>
-        <ContactForm addContact={this.addContact} />
-        <h2>Contacts</h2>
-        <Filter filter={this.state.filter} findTarget={this.changeFilter} />
-        <ContactList
-          deleteItem={this.deleteItem}
-          contacts={this.findTarget()}
-        />
-      </div>
-    );
-  }
+  return (
+    <div
+      style={{
+        padding: '10px',
+      }}
+    >
+      <h1>Phonebook</h1>
+      <ContactForm addContact={addContact} />
+      <h2>Contacts</h2>
+      <Filter filter={filter} findTarget={changeFilter} />
+      <ContactList deleteItem={deleteItem} contacts={findTarget()} />
+    </div>
+  );
 }
-
-export default App;
