@@ -1,15 +1,16 @@
 import s from './ContactList.module.css';
 import PropTypes from 'prop-types';
 
-const ContactList = props => {
+export default function ContactList(props) {
   const { contacts, deleteItem } = props;
+
   return (
     <ul className={s.list}>
       {contacts.map(contact => (
         <li className={s.item} key={contact.id}>
-          <p id={contact.id}>
-            {contact.name}: {contact.number}
-          </p>
+          {Object.keys(contact).map(el =>
+            el === 'id' ? null : <p className={s.element} key={contact[el]}>{contact[el]}</p>
+          )}
           <button
             onClick={deleteItem}
             id={contact.id}
@@ -22,7 +23,7 @@ const ContactList = props => {
       ))}
     </ul>
   );
-};
+}
 
 ContactList.propTypes = {
   contacts: PropTypes.arrayOf(
@@ -34,5 +35,3 @@ ContactList.propTypes = {
   ).isRequired,
   deleteItem: PropTypes.func.isRequired,
 };
-
-export default ContactList;

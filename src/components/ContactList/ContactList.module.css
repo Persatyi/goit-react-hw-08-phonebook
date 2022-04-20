@@ -10,3 +10,7 @@
 .button {
   margin-left: 10px;
 }
+
+.element:not(:last-child) {
+  margin-right: 8px;
+}

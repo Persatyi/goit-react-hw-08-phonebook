@@ -5,19 +5,12 @@ import Filter from 'components/Filter/Filter';
 import { get, save, contactKey } from 'components/localStorage/localStorage';
 
 export default function App() {
-  const [contacts, setContacts] = useState([]);
+  const [contacts, setContacts] = useState(get(contactKey) ?? []);
   const [filter, setFilter] = useState('');
 
   useEffect(() => {
-    const dataBase = get(contactKey);
-    if (dataBase) {
-      setContacts({
-        contacts: dataBase,
-      });
-    }
-
     save(contactKey, contacts);
-  }, []);
+  }, [contacts]);
 
   const addContact = (contact, form) => {
     const ifName = contacts.find(
@@ -29,7 +22,7 @@ export default function App() {
       return;
     }
 
-    const ifNumber = this.state.contacts.find(
+    const ifNumber = contacts.find(
       el => el.number.replaceAll('-', '') === contact.number.replaceAll('-', '')
     );
 
@@ -38,9 +31,7 @@ export default function App() {
       return;
     }
 
-    setContacts(prev => ({
-      contacts: [...prev, contact],
-    }));
+    setContacts(prev => [...prev, contact]);
 
     form();
   };
@@ -50,17 +41,13 @@ export default function App() {
   };
 
   const changeFilter = word => {
-    setFilter({
-      filter: word,
-    });
+    setFilter(word);
   };
 
   const deleteItem = e => {
     const id = e.target.id;
     const newList = contacts.filter(el => el.id !== id);
-    setContacts({
-      contacts: newList,
-    });
+    setContacts(newList);
   };
 
   return (
@@ -72,7 +59,7 @@ export default function App() {
       <h1>Phonebook</h1>
       <ContactForm addContact={addContact} />
       <h2>Contacts</h2>
-      <Filter filter={filter} findTarget={changeFilter} />
+      <Filter value={filter} findTarget={changeFilter} />
       <ContactList deleteItem={deleteItem} contacts={findTarget()} />
     </div>
   );

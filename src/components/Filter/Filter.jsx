@@ -1,30 +1,26 @@
 import s from './Filter.module.css';
-import { Component, Fragment } from 'react';
+import { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
-class Filter extends Component {
-  static propTypes = {
-    findTarget: PropTypes.func.isRequired,
-    filter: PropTypes.string.isRequired,
-  };
-
-  searchHandler = e => {
+export default function Filter(props) {
+  const searchHandler = e => {
     const value = e.target.value.toLowerCase().trim();
-    this.props.findTarget(value);
+    props.findTarget(value);
   };
 
-  render() {
-    return (
-      <Fragment>
-        <input
-          value={this.props.filter}
-          onChange={this.searchHandler}
-          className={s.input}
-          placeholder="Search contact"
-        />
-      </Fragment>
-    );
-  }
+  return (
+    <Fragment>
+      <input
+        value={props.value}
+        onChange={searchHandler}
+        className={s.input}
+        placeholder="Search contact"
+      />
+    </Fragment>
+  );
 }
 
-export default Filter;
+Filter.propTypes = {
+  findTarget: PropTypes.func.isRequired,
+  value: PropTypes.string.isRequired,
+};
