@@ -3,8 +3,13 @@ import { Fragment, useReducer } from 'react';
 import data from 'db/input.json';
 import { nanoid } from 'nanoid';
 import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
+import { addContact } from 'redux/actions';
 
-export default function ContactForm(props) {
+export default function ContactForm() {
+  const dispatch = useDispatch();
+  const contacts = useSelector(state => state.contacts);
+
   const initialState = {
     name: '',
     number: '',
@@ -18,7 +23,7 @@ export default function ContactForm(props) {
     email: 'email',
   };
 
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [state, dispatchLocal] = useReducer(reducer, initialState);
 
   function reducer(state, action) {
     const { type, payload } = action;
@@ -32,25 +37,51 @@ export default function ContactForm(props) {
       case initialTypes.email:
         return { ...state, email: payload };
       default:
-        return;
+        return state;
     }
   }
 
-  const onSubmit = e => {
-    e.preventDefault();
-    const contact = { id: nanoid(), ...state };
-
-    props.addContact(contact, () => dispatch({ type: initialTypes.reset }));
-  };
-
   const controlTheInput = e => {
     const { value, name } = e.target;
-    dispatch({ type: name, payload: value });
+    dispatchLocal({ type: name, payload: value });
   };
+
+  const addContactOnSubmit = e => {
+    e.preventDefault();
+
+    const contact = { id: nanoid(), ...state };
+
+    const ifName = contacts.find(
+      el => el.name.toLowerCase() === contact.name.toLowerCase()
+    );
+
+    if (ifName) {
+      alert(`${ifName.name} is already exist, please type new name`);
+      return;
+    }
+
+    const ifNumber = contacts.find(
+      el => el.number.replaceAll('-', '') === contact.number.replaceAll('-', '')
+    );
+
+    if (ifNumber) {
+      alert(`${ifNumber.number} is already exist, please type new number`);
+      return;
+    }
+
+    // setContacts(prev => [...prev, contact]);
+    dispatch(addContact(contact));
+    dispatchLocal({ type: 'reset' });
+  };
+
+  // const onSubmit = e => {
+  //   addContact(contact, dispatch(addContact));
+  //   props.addContact(contact, () => dispatch({ type: initialTypes.reset }));
+  // };
 
   const keysArr = Object.keys(initialState);
   return (
-    <form className={s.form} onSubmit={onSubmit}>
+    <form className={s.form} onSubmit={addContactOnSubmit}>
       {keysArr.map(key => {
         const { id, type, name, pattern, title } = data[key];
         return (
@@ -78,7 +109,3 @@ export default function ContactForm(props) {
     </form>
   );
 }
-
-ContactForm.propTypes = {
-  addContact: PropTypes.func.isRequired,
-};
