@@ -2,11 +2,12 @@ import s from './ContactList.module.css';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { removeContact } from 'redux/actions';
+import { filteredContactsSelector } from 'redux/selectors';
 
 export default function ContactList() {
   // const { contacts, deleteItem } = props;
   // const [contacts, setContacts] = useState(get(contactKey) ?? []);
-  const contacts = useSelector(state => state.contacts);
+  const contacts = useSelector(state => filteredContactsSelector(state));
   const dispatch = useDispatch();
 
   const deleteItem = e => {
@@ -41,13 +42,14 @@ export default function ContactList() {
   );
 }
 
-// ContactList.propTypes = {
-//   contacts: PropTypes.arrayOf(
-//     PropTypes.shape({
-//       name: PropTypes.string.isRequired,
-//       id: PropTypes.string.isRequired,
-//       number: PropTypes.string.isRequired,
-//     })
-//   ).isRequired,
-//   deleteItem: PropTypes.func.isRequired,
-// };
+ContactList.propTypes = {
+  contacts: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      id: PropTypes.string.isRequired,
+      number: PropTypes.string.isRequired,
+      email: PropTypes.string.isRequired,
+    })
+  ),
+  deleteItem: PropTypes.func,
+};

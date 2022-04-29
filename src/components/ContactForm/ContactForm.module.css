@@ -1,23 +1,45 @@
 .form {
-  border: 2px solid black;
+  margin: 0 auto;
+  border: 2px solid blue;
+  border-radius: 20px;
   width: 250px;
   min-height: 150px;
-  padding: 10px;
+  padding: 20px;
 }
 
 .label {
-  display: block;
+  display: flex;
   margin-bottom: 5px;
   text-transform: capitalize;
 }
 
 .input {
+  width: 230px;
+  outline: transparent;
   margin-bottom: 10px;
-  width: 200px;
-  height: 20px;
+  padding: 10px;
+  border-radius: 20px;
+  border: 1px solid black;
+}
+
+.input:focus {
+  border: 1px solid blue;
 }
 
 .button {
   display: block;
-  padding: 5px;
+  margin: 0 auto;
+  min-width: 200px;
+  max-width: 100%;
+  padding: 15px;
+  border-radius: 20px;
+  border: 1px solid black;
+  transition: border 250ms linear, color 250ms linear;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.button:hover {
+  border: 1px solid blue;
+  color: blue;
 }

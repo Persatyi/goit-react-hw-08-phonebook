@@ -9,9 +9,9 @@ export default function App() {
         padding: '10px',
       }}
     >
-      <h1>Phonebook</h1>
+      <h1 className="title">Phonebook</h1>
       <ContactForm />
-      <h2>Contacts</h2>
+      <h2 className="title">Contacts</h2>
       <Filter />
       <ContactList />
     </div>

@@ -1,4 +1,5 @@
-import { createStore } from 'redux';
+// import { createStore } from 'redux';
+import { configureStore, createReducer } from '@reduxjs/toolkit';
 import { get, save, contactKey } from 'components/localStorage/localStorage';
 
 const initialState = {
@@ -6,33 +7,48 @@ const initialState = {
   filter: '',
 };
 
-const reducer = (state = initialState, { type, payload }) => {
-  switch (type) {
-    case 'add':
-      const contacts = [...state.contacts, payload];
+const reducer = createReducer(initialState, builder => {
+  builder
+    .addCase('add', (state, { payload }) => {
+      const contacts = (state.contacts = [...state.contacts, payload]);
       save(contactKey, contacts);
-      return { ...state, contacts };
-    case 'remove':
-      const newContactsArr = state.contacts.filter(el => el.id !== payload);
+    })
+    .addCase('remove', (state, { payload }) => {
+      const newContactsArr = (state.contacts = state.contacts.filter(
+        el => el.id !== payload
+      ));
       save(contactKey, newContactsArr);
-      return {
-        ...state,
-        contacts: newContactsArr,
-      };
-    case 'filter':
-      const filter = { ...initialState, filter: payload };
-      const filteredArr = filter.contacts.filter(el =>
-        el.name.toLowerCase().includes(filter.filter)
-      );
-      return {
-        ...state,
-        contacts: filteredArr,
-      };
-    default:
-      return state;
-  }
-};
+    })
+    .addCase('filter', (state, { payload }) => {
+      state.filter = payload;
+    });
+});
 
-const store = createStore(reducer);
+// const reducer = (state = initialState, { type, payload }) => {
+//   switch (type) {
+//     case 'add':
+//       const contacts = [...state.contacts, payload];
+//       save(contactKey, contacts);
+//       return { ...state, contacts };
+//     case 'remove':
+//       const newContactsArr = state.contacts.filter(el => el.id !== payload);
+//       save(contactKey, newContactsArr);
+//       return {
+//         ...state,
+//         contacts: newContactsArr,
+//       };
+//     case 'filter':
+//       return {
+//         ...state,
+//         filter: payload,
+//       };
+//     default:
+//       return state;
+//   }
+// };
+
+const store = configureStore({
+  reducer,
+});
 
 export default store;

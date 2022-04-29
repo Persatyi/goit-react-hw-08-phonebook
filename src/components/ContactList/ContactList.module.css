@@ -1,14 +1,40 @@
 .list {
   list-style: none;
+  max-height: 220px;
+  overflow-y: scroll;
+  border: 1px solid blue;
+  padding: 8px;
 }
 
 .item {
+  padding: 10px;
+  border: 1px solid blue;
+  border-radius: 8px;
   display: flex;
   align-items: baseline;
 }
 
+.item:not(:last-child) {
+  margin-bottom: 5px;
+}
+
 .button {
-  margin-left: 10px;
+  margin-left: auto;
+  min-width: 100px;
+  border: 1px solid black;
+  border-radius: 20px;
+  padding: 5px;
+  cursor: pointer;
+  transition: border 250ms linear, color 250ms linear;
+}
+
+.button:not(:last-child) {
+  margin-right: 5px;
+}
+
+.button:hover {
+  border: 1px solid blue;
+  color: blue;
 }
 
 .element:not(:last-child) {

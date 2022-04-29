@@ -109,3 +109,16 @@ export default function ContactForm() {
     </form>
   );
 }
+
+ContactForm.propTypes = {
+  addContactOnSubmit: PropTypes.func,
+  keysArr: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+      type: PropTypes.string,
+      name: PropTypes.string,
+      pattern: PropTypes.string,
+      title: PropTypes.string,
+    })
+  ),
+};

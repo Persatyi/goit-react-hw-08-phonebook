@@ -1,12 +1,19 @@
 import s from './Filter.module.css';
 import { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { filterContacts } from 'redux/actions';
+import { filterSelector } from 'redux/selectors';
 // import { useState, useEffect } from 'react';
 
-export default function Filter(props) {
+export default function Filter() {
   const dispatch = useDispatch();
+  const value = useSelector(state => filterSelector(state));
+
+  const searchHandler = e => {
+    const value = e.target.value.toLowerCase().trim();
+    dispatch(filterContacts(value));
+  };
   // const [filter, setFilter] = useState('');
 
   // useEffect(() => {
@@ -21,15 +28,10 @@ export default function Filter(props) {
   //   setFilter(word);
   // };
 
-  const searchHandler = e => {
-    const value = e.target.value.toLowerCase().trim();
-    dispatch(filterContacts(value));
-  };
-
   return (
     <Fragment>
       <input
-        value={props.value}
+        value={value}
         onChange={searchHandler}
         className={s.input}
         placeholder="Search contact"
@@ -38,7 +40,7 @@ export default function Filter(props) {
   );
 }
 
-// Filter.propTypes = {
-//   findTarget: PropTypes.func.isRequired,
-//   value: PropTypes.string.isRequired,
-// };
+Filter.propTypes = {
+  searchHandler: PropTypes.func,
+  value: PropTypes.string,
+};
