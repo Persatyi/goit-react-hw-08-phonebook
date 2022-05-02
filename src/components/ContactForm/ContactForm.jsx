@@ -4,7 +4,7 @@ import data from 'db/input.json';
 import { nanoid } from 'nanoid';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import { addContact } from 'redux/actions';
+import { addContact } from 'redux/contacts-thunk';
 
 export default function ContactForm() {
   const dispatch = useDispatch();
@@ -69,15 +69,9 @@ export default function ContactForm() {
       return;
     }
 
-    // setContacts(prev => [...prev, contact]);
     dispatch(addContact(contact));
     dispatchLocal({ type: 'reset' });
   };
-
-  // const onSubmit = e => {
-  //   addContact(contact, dispatch(addContact));
-  //   props.addContact(contact, () => dispatch({ type: initialTypes.reset }));
-  // };
 
   const keysArr = Object.keys(initialState);
   return (

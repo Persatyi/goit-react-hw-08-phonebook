@@ -1,20 +1,22 @@
 import s from './ContactList.module.css';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import { removeContact } from 'redux/actions';
 import { filteredContactsSelector } from 'redux/selectors';
+import { fetchContacts } from 'redux/contacts-thunk';
+import { useEffect } from 'react';
+import { deleteContact } from 'redux/contacts-thunk';
 
 export default function ContactList() {
-  // const { contacts, deleteItem } = props;
-  // const [contacts, setContacts] = useState(get(contactKey) ?? []);
   const contacts = useSelector(state => filteredContactsSelector(state));
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
+
   const deleteItem = e => {
     const id = e.target.id;
-    dispatch(removeContact(id));
-    // const newList = contacts.filter(el => el.id !== id);
-    // setContacts(newList);
+    dispatch(deleteContact(id));
   };
 
   return (
