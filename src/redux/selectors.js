@@ -9,5 +9,5 @@ export const filterSelector = state => {
 export const filteredContactsSelector = state => {
   const contacts = contactsSelector(state);
   const filter = filterSelector(state);
-  return contacts.filter(el => el.name.toLowerCase().includes(filter));
+  return contacts?.filter(el => el.name.toLowerCase().includes(filter));
 };

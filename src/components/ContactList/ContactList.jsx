@@ -19,7 +19,7 @@ export default function ContactList() {
     dispatch(deleteContact(id));
   };
 
-  return (
+  return contacts.length === 0 ? null : (
     <ul className={s.list}>
       {contacts.map(contact => (
         <li className={s.item} key={contact.id}>

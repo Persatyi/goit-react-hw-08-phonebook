@@ -13,7 +13,7 @@ export const fetchContacts = createAsyncThunk(
       const contacts = await response.json();
       return contacts;
     } catch (error) {
-      thunkAPI.rejectWithValue(error);
+      return thunkAPI.rejectWithValue(error.message);
     }
   }
 );
