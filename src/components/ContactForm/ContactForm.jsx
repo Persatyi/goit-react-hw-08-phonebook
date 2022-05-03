@@ -5,6 +5,7 @@ import { nanoid } from 'nanoid';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { addContact } from 'redux/contacts-thunk';
+import { toast } from 'react-toastify';
 
 export default function ContactForm() {
   const dispatch = useDispatch();
@@ -56,7 +57,7 @@ export default function ContactForm() {
     );
 
     if (ifName) {
-      alert(`${ifName.name} is already exist, please type new name`);
+      toast.info(`${ifName.name} is already exist, please type new name`);
       return;
     }
 
@@ -65,7 +66,7 @@ export default function ContactForm() {
     );
 
     if (ifNumber) {
-      alert(`${ifNumber.number} is already exist, please type new number`);
+      toast.info(`${ifNumber.number} is already exist, please type new number`);
       return;
     }
 
