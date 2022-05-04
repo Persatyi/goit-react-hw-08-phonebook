@@ -1,11 +1,22 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { fetchContacts, addContact, deleteContact } from './contacts-thunk';
 import { toast } from 'react-toastify';
+import {
+  createAccount,
+  loginUser,
+  refreshAccount,
+  logOut,
+} from './contacts-thunk';
 
 const initialState = {
   contacts: [],
   filter: '',
   loading: false,
+  token: '',
+  user: {
+    name: '',
+    email: '',
+  },
 };
 
 const slice = createSlice({
@@ -51,6 +62,52 @@ const slice = createSlice({
       state.contacts = state.contacts.filter(el => el.id !== action.meta.arg);
     },
     [deleteContact.rejected]: (state, _) => {
+      state.loading = false;
+      toast.error('Oops, something went wrong, please try again');
+    },
+    [createAccount.pending]: (state, _) => {
+      state.loading = true;
+    },
+    [createAccount.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.token = action.payload.token;
+      state.user = action.payload.user;
+    },
+    [createAccount.rejected]: (state, _) => {
+      state.loading = false;
+      toast.error('Oops, something went wrong, please try again');
+    },
+    [loginUser.pending]: (state, _) => {
+      state.loading = true;
+    },
+    [loginUser.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.token = action.payload.token;
+      state.user = action.payload.user;
+    },
+    [loginUser.rejected]: (state, _) => {
+      state.loading = false;
+      toast.error('Oops, something went wrong, please try again');
+    },
+    [refreshAccount.pending]: (state, _) => {
+      state.loading = true;
+    },
+    [refreshAccount.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.user = action.payload;
+    },
+    [refreshAccount.rejected]: (state, _) => {
+      state.loading = false;
+      toast.error('Oops, something went wrong, please try again');
+    },
+    // [logOut.pending]: (state, _) => {
+    //   state.loading = true;
+    // },
+    [logOut.fulfilled]: (state, _) => {
+      state.loading = false;
+      return initialState;
+    },
+    [logOut.rejected]: (state, _) => {
       state.loading = false;
       toast.error('Oops, something went wrong, please try again');
     },
