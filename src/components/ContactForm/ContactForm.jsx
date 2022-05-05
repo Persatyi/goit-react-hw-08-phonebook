@@ -14,14 +14,12 @@ export default function ContactForm() {
   const initialState = {
     name: '',
     number: '',
-    email: '',
   };
 
   const initialTypes = {
     name: 'name',
     number: 'number',
     reset: 'reset',
-    email: 'email',
   };
 
   const [state, dispatchLocal] = useReducer(reducer, initialState);
@@ -35,8 +33,6 @@ export default function ContactForm() {
         return { ...state, number: payload };
       case initialTypes.reset:
         return initialState;
-      case initialTypes.email:
-        return { ...state, email: payload };
       default:
         return state;
     }

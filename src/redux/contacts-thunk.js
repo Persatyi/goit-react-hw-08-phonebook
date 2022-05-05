@@ -75,21 +75,23 @@ export const logOut = createAsyncThunk('logout', async (_, thunkAPI) => {
       url: '/users/logout',
     });
     token.unset();
+    return response.data;
   } catch (error) {
     return thunkAPI.rejectWithValue(error.message);
   }
 });
 
-export const fetchContacts = createAsyncThunk(
+export const getContacts = createAsyncThunk(
   'contacts/get',
   async (_, thunkAPI) => {
     try {
-      const response = await fetch(BASE_URL);
-      if (!response.ok) {
-        throw new Error(response.status);
-      }
-      const contacts = await response.json();
-      return contacts;
+      const state = thunkAPI.getState();
+      token.set(state.token);
+      const response = await axios({
+        method: 'get',
+        url: '/contacts',
+      });
+      return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
@@ -100,15 +102,32 @@ export const addContact = createAsyncThunk(
   'contacts/add',
   async (contact, thunkAPI) => {
     try {
-      const response = await fetch(BASE_URL, {
-        method: 'POST',
-        body: JSON.stringify(contact),
-        headers: {
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
+      const state = thunkAPI.getState();
+      token.set(state.token);
+      const response = await axios({
+        method: 'post',
+        url: '/contacts',
+        data: contact,
       });
-      const newContact = await response.json();
-      return newContact;
+      return response.data;
+    } catch (error) {
+      thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const editContact = createAsyncThunk(
+  'contact/edit',
+  async ({ id, name, number }, thunkAPI) => {
+    try {
+      console.log(id);
+      const state = thunkAPI.getState();
+      token.set(state.token);
+      await axios({
+        method: 'patch',
+        url: `/contacts/${id}`,
+        data: { name: name, number: number },
+      });
     } catch (error) {
       thunkAPI.rejectWithValue(error);
     }
@@ -119,8 +138,11 @@ export const deleteContact = createAsyncThunk(
   'contact/delete',
   async (id, thunkAPI) => {
     try {
-      await fetch(`${BASE_URL}/${id}`, {
-        method: 'DELETE',
+      const state = thunkAPI.getState();
+      token.set(state.token);
+      await axios({
+        method: 'delete',
+        url: `/contacts/${id}`,
       });
     } catch (error) {
       thunkAPI.rejectWithValue(error);

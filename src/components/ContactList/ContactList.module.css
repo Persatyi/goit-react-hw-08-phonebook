@@ -14,15 +14,28 @@
   display: flex;
   align-items: baseline;
   background-color: #21262d;
-  color: #ffffff;
 }
 
 .item:not(:last-child) {
   margin-bottom: 5px;
 }
 
+.details {
+  margin-right: 10px;
+  text-transform: capitalize;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.element {
+  color: #c9d1d9;
+}
+
+.element:not(:last-child) {
+  margin-right: 50px;
+}
+
 .button {
-  margin-left: auto;
   min-width: 100px;
   min-height: 30px;
 
@@ -32,16 +45,22 @@
   color: #ffffff;
   background-color: #da3633;
   transition: background-color 250ms linear;
-}
 
-.button:not(:last-child) {
-  margin-right: 5px;
+  text-transform: capitalize;
+  font-weight: 600;
 }
 
 .button:hover {
   background-color: #f85149;
 }
 
-.element:not(:last-child) {
-  margin-right: 8px;
+.editBtn {
+  composes: button;
+  margin-left: auto;
+  margin-right: 10px;
+  background-color: #1f6feb;
+}
+
+.editBtn:hover {
+  background-color: #4492ec;
 }

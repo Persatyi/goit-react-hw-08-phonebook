@@ -1,5 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchContacts, addContact, deleteContact } from './contacts-thunk';
+import {
+  getContacts,
+  addContact,
+  deleteContact,
+  editContact,
+} from './contacts-thunk';
 import { toast } from 'react-toastify';
 import {
   createAccount,
@@ -13,6 +18,7 @@ const initialState = {
   filter: '',
   loading: false,
   token: '',
+  edit: '',
   user: {
     name: '',
     email: '',
@@ -26,16 +32,19 @@ const slice = createSlice({
     filter(state, action) {
       state.filter = action.payload;
     },
+    edit(state, action) {
+      state.edit = action.payload;
+    },
   },
   extraReducers: {
-    [fetchContacts.pending]: (state, _) => {
+    [getContacts.pending]: (state, _) => {
       state.loading = true;
     },
-    [fetchContacts.fulfilled]: (state, action) => {
+    [getContacts.fulfilled]: (state, action) => {
       state.loading = false;
       state.contacts = action.payload;
     },
-    [fetchContacts.rejected]: (state, action) => {
+    [getContacts.rejected]: (state, action) => {
       action.payload === '404'
         ? toast.info('There are no contacts yet, please add a new contact')
         : toast.error('Oops, something went wrong, please try again');
@@ -50,6 +59,18 @@ const slice = createSlice({
       state.contacts = [...state.contacts, action.payload];
     },
     [addContact.rejected]: (state, _) => {
+      state.loading = false;
+      toast.error('Oops, something went wrong, please try again');
+    },
+    [editContact.pending]: (state, _) => {
+      state.loading = true;
+    },
+    [editContact.fulfilled]: (state, action) => {
+      state.loading = false;
+      toast.success('Сontact successfully updated');
+      state.contacts = [...state.contacts, action.payload];
+    },
+    [editContact.rejected]: (state, _) => {
       state.loading = false;
       toast.error('Oops, something went wrong, please try again');
     },
@@ -96,15 +117,14 @@ const slice = createSlice({
       state.loading = false;
       state.user = action.payload;
     },
-    [refreshAccount.rejected]: (state, _) => {
+    [refreshAccount.rejected]: (state, action) => {
       state.loading = false;
-      toast.error('Oops, something went wrong, please try again');
+      toast.error(action.payload);
     },
-    // [logOut.pending]: (state, _) => {
-    //   state.loading = true;
-    // },
-    [logOut.fulfilled]: (state, _) => {
-      state.loading = false;
+    [logOut.pending]: (state, _) => {
+      state.loading = true;
+    },
+    [logOut.fulfilled]: () => {
       return initialState;
     },
     [logOut.rejected]: (state, _) => {
@@ -115,4 +135,4 @@ const slice = createSlice({
 });
 
 export default slice;
-export const { filter } = slice.actions;
+export const { filter, edit } = slice.actions;

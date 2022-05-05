@@ -11,3 +11,13 @@ export const filteredContactsSelector = state => {
   const filter = filterSelector(state);
   return contacts?.filter(el => el.name.toLowerCase().includes(filter));
 };
+
+export const editIdSelector = state => {
+  return state.edit;
+};
+
+export const getContact = state => {
+  const contacts = contactsSelector(state);
+  const id = editIdSelector(state);
+  return contacts.find(el => el.id === id);
+};

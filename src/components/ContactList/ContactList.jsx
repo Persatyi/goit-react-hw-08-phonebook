@@ -2,21 +2,27 @@ import s from './ContactList.module.css';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { filteredContactsSelector } from 'redux/selectors';
-import { fetchContacts } from 'redux/contacts-thunk';
+import { getContacts } from 'redux/contacts-thunk';
 import { useEffect } from 'react';
 import { deleteContact } from 'redux/contacts-thunk';
+import { edit } from 'redux/contacts-slice';
 
 export default function ContactList() {
   const contacts = useSelector(state => filteredContactsSelector(state));
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchContacts());
+    dispatch(getContacts());
   }, [dispatch]);
 
   const deleteItem = e => {
     const id = e.target.id;
     dispatch(deleteContact(id));
+  };
+
+  const editItem = e => {
+    const id = e.target.id;
+    dispatch(edit(id));
   };
 
   return contacts.length === 0 ? null : (
@@ -26,10 +32,19 @@ export default function ContactList() {
           {Object.keys(contact).map(el =>
             el === 'id' ? null : (
               <p className={s.element} key={contact[el]}>
+                <span className={s.details}>{el}:</span>
                 {contact[el]}
               </p>
             )
           )}
+          <button
+            onClick={editItem}
+            id={contact.id}
+            className={s.editBtn}
+            type="button"
+          >
+            Edit
+          </button>
           <button
             onClick={deleteItem}
             id={contact.id}

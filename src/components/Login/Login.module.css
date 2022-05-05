@@ -73,3 +73,12 @@
 .switcher:hover {
   border-color: #ffffff;
 }
+
+.activeSwitcher {
+  composes: switcher;
+  background-color: #8b949e;
+}
+
+.activeSwitcher:hover {
+  border-color: #6e7681;
+}

@@ -75,7 +75,7 @@ const Login = () => {
       <form className={s.form} onSubmit={state.isRegister ? signUp : login}>
         <div className={s.switcherWrapper}>
           <button
-            className={s.switcher}
+            className={state.isRegister ? s.switcher : s.activeSwitcher}
             type="button"
             name="login"
             onClick={switchForm}
@@ -83,7 +83,7 @@ const Login = () => {
             Login
           </button>
           <button
-            className={s.switcher}
+            className={state.isRegister ? s.activeSwitcher : s.switcher}
             type="button"
             name="reset"
             onClick={switchForm}
