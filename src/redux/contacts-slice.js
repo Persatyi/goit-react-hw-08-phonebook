@@ -19,6 +19,7 @@ const initialState = {
   loading: false,
   token: '',
   edit: '',
+  isLoggedIn: false,
   user: {
     name: '',
     email: '',
@@ -62,13 +63,15 @@ const slice = createSlice({
       state.loading = false;
       toast.error('Oops, something went wrong, please try again');
     },
-    [editContact.pending]: (state, _) => {
+    [editContact.pending]: (state, action) => {
       state.loading = true;
     },
     [editContact.fulfilled]: (state, action) => {
       state.loading = false;
       toast.success('Сontact successfully updated');
-      state.contacts = [...state.contacts, action.payload];
+      state.contacts = state.contacts.map(el =>
+        el.id === action.payload.id ? action.payload : el
+      );
     },
     [editContact.rejected]: (state, _) => {
       state.loading = false;
@@ -91,6 +94,7 @@ const slice = createSlice({
     },
     [createAccount.fulfilled]: (state, action) => {
       state.loading = false;
+      state.isLoggedIn = true;
       state.token = action.payload.token;
       state.user = action.payload.user;
     },
@@ -103,6 +107,7 @@ const slice = createSlice({
     },
     [loginUser.fulfilled]: (state, action) => {
       state.loading = false;
+      state.isLoggedIn = true;
       state.token = action.payload.token;
       state.user = action.payload.user;
     },
@@ -119,7 +124,7 @@ const slice = createSlice({
     },
     [refreshAccount.rejected]: (state, action) => {
       state.loading = false;
-      toast.error(action.payload);
+      // toast.error(action.payload);
     },
     [logOut.pending]: (state, _) => {
       state.loading = true;

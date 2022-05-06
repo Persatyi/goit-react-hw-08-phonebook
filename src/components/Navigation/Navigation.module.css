@@ -1,0 +1,37 @@
+.navigation {
+  display: flex;
+  align-items: center;
+  margin: 0 auto;
+  width: 700px;
+  padding: 15px;
+  background-color: #21262d;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.22),
+    0 10px 13px 0px rgba(0, 0, 0, 0.34);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  background-color: #8b949e;
+}
+
+.email {
+  margin: 0;
+  margin-left: 15px;
+  color: #8b949e;
+  font-weight: 600;
+}
+
+.logout {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
+  padding: 3px;
+}

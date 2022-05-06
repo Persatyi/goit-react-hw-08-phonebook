@@ -17,6 +17,8 @@
   min-height: 150px;
   padding: 20px;
   background-color: #21262d;
+  box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.22),
+    0 10px 13px 0px rgba(0, 0, 0, 0.34);
 }
 
 .label {
@@ -33,6 +35,7 @@
   padding: 10px;
   border-radius: 8px;
   border: 1px solid #30363d;
+
   background-color: #8b949e;
 }
 
@@ -40,20 +43,25 @@
   border: 1px solid #c9d1d9;
 }
 
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
 .button {
-  display: block;
   margin: 0 auto;
-  min-width: 200px;
+  min-width: 100px;
   max-width: 100%;
   padding: 15px;
   border-radius: 8px;
-  background-color: #3fb950;
+  background-color: rgba(150, 146, 146, 0.3);
   transition: background-color 250ms linear, color 250ms linear;
   font-weight: 600;
   color: #ffffff;
   cursor: pointer;
+  border: transparent;
 }
 
 .button:hover {
-  background-color: #56d364;
+  background-color: rgba(192, 192, 192, 0.3);
 }

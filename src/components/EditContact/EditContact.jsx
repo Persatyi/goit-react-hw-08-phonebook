@@ -11,9 +11,9 @@ const EditContact = () => {
   const dispatch = useDispatch();
 
   const initialState = {
-    name: '',
-    number: '',
-    id: '',
+    name: contact.name,
+    number: contact.number,
+    id: contact.id,
   };
 
   const initialTypes = {
@@ -49,8 +49,7 @@ const EditContact = () => {
 
   const saveChanges = e => {
     e.preventDefault();
-    dispatchLocal({ type: 'id', payload: contact.id });
-    editContact(state);
+    dispatch(editContact(state));
     dispatch(edit(''));
   };
 
@@ -64,9 +63,9 @@ const EditContact = () => {
         <input
           onChange={controlTheInput}
           className={s.input}
-          value={contact.name}
+          value={state.name}
           type={name.type}
-          name="name"
+          name={name.name}
           pattern={name.pattern}
           title={name.title}
           id={contact.name}
@@ -78,18 +77,22 @@ const EditContact = () => {
         <input
           onChange={controlTheInput}
           className={s.input}
-          value={contact.number}
+          value={state.number}
           type={number.type}
-          name="number"
+          name={number.name}
           pattern={number.pattern}
           title={number.title}
           id={contact.number}
           required
         />
-        <button type="submit">Submit</button>
-        <button type="button" onClick={cancelEdit}>
-          Cancel
-        </button>
+        <div className={s.wrapper}>
+          <button className={s.button} type="submit">
+            Submit
+          </button>
+          <button className={s.button} type="button" onClick={cancelEdit}>
+            Cancel
+          </button>
+        </div>
       </form>
     </div>
   );

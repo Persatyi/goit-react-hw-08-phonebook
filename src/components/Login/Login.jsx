@@ -3,9 +3,11 @@ import { Fragment, useReducer } from 'react';
 import data from 'db/input.json';
 import { useDispatch } from 'react-redux';
 import { createAccount, loginUser } from 'redux/contacts-thunk';
+import image from 'images/5.jpg';
 
 const Login = () => {
   const dispatch = useDispatch();
+
   const initialState = { name: '', email: '', password: '', isRegister: true };
 
   const initialTypes = {
@@ -72,75 +74,86 @@ const Login = () => {
   const { name, email, password } = data;
   return (
     <Fragment>
-      <form className={s.form} onSubmit={state.isRegister ? signUp : login}>
-        <div className={s.switcherWrapper}>
-          <button
-            className={state.isRegister ? s.switcher : s.activeSwitcher}
-            type="button"
-            name="login"
-            onClick={switchForm}
-          >
-            Login
-          </button>
-          <button
-            className={state.isRegister ? s.activeSwitcher : s.switcher}
-            type="button"
-            name="reset"
-            onClick={switchForm}
-          >
-            Sign Up
-          </button>
-        </div>
-        {state.isRegister && (
-          <>
-            <label className={s.label} htmlFor={name.id}>
-              {name.name}
+      <div className={s.wrapper}>
+        <h1>Welcome to phonebook</h1>
+        <p className={s.text}>
+          If you want to continue please login or create an account
+        </p>
+        <div className={s.positionWrapper}>
+          <div className={s.imgWrapper}>
+            <img src={image} alt="meme" className={s.img} />
+          </div>
+          <form className={s.form} onSubmit={state.isRegister ? signUp : login}>
+            <div className={s.switcherWrapper}>
+              <button
+                className={state.isRegister ? s.switcher : s.activeSwitcher}
+                type="button"
+                name="login"
+                onClick={switchForm}
+              >
+                Login
+              </button>
+              <button
+                className={state.isRegister ? s.activeSwitcher : s.switcher}
+                type="button"
+                name="reset"
+                onClick={switchForm}
+              >
+                Sign Up
+              </button>
+            </div>
+            {state.isRegister && (
+              <>
+                <label className={s.label} htmlFor={name.id}>
+                  {name.name}
+                </label>
+                <input
+                  onChange={controlTheInput}
+                  value={state.name}
+                  id={name.id}
+                  className={s.input}
+                  type={name.type}
+                  name={name.name}
+                  pattern={name.pattern}
+                  title={name.title}
+                  required
+                />
+              </>
+            )}
+            <label className={s.label} htmlFor={email.id}>
+              {email.name}
             </label>
             <input
               onChange={controlTheInput}
-              value={state.name}
-              id={name.id}
+              value={state.email}
+              id={email.id}
               className={s.input}
-              type={name.type}
-              name={name.name}
-              pattern={name.pattern}
-              title={name.title}
+              type={email.type}
+              name={email.name}
+              pattern={email.pattern}
+              title={email.title}
               required
             />
-          </>
-        )}
-        <label className={s.label} htmlFor={email.id}>
-          {email.name}
-        </label>
-        <input
-          onChange={controlTheInput}
-          value={state.email}
-          id={email.id}
-          className={s.input}
-          type={email.type}
-          name={email.name}
-          pattern={email.pattern}
-          title={email.title}
-          required
-        />
-        <label className={s.label} htmlFor={password.id}>
-          {password.name}
-        </label>
-        <input
-          onChange={controlTheInput}
-          value={state.password}
-          id={password.id}
-          className={s.input}
-          type={password.type}
-          name={password.name}
-          pattern={password.pattern}
-          title={password.title}
-          required
-        />
-        <button className={s.button} type="submit">
-          {state.isRegister ? 'Create Account' : "Ok, I'll do it"}
-        </button>
-      </form>
+            <label className={s.label} htmlFor={password.id}>
+              {password.name}
+            </label>
+            <input
+              onChange={controlTheInput}
+              value={state.password}
+              id={password.id}
+              className={s.input}
+              type={password.type}
+              name={password.name}
+              pattern={password.pattern}
+              title={password.title}
+              required
+            />
+            <button className={s.button} type="submit">
+              {state.isRegister ? 'Create Account' : "Ok, I'll do it"}
+            </button>
+          </form>
+        </div>
+      </div>
     </Fragment>
   );
 };
