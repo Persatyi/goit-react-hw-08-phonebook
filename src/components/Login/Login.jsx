@@ -68,6 +68,7 @@ const Login = () => {
 
   const switchForm = e => {
     const { name } = e.target;
+
     dispatchLocal({ type: name });
   };
 
