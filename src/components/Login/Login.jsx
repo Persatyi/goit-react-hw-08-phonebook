@@ -1,13 +1,14 @@
 import s from './Login.module.css';
 import { Fragment, useReducer } from 'react';
+
 import data from 'db/input.json';
 import { useDispatch } from 'react-redux';
 import { createAccount, loginUser } from 'redux/contacts-thunk';
 import image from 'images/5.jpg';
+import PropTypes from 'prop-types';
 
 const Login = () => {
   const dispatch = useDispatch();
-
   const initialState = { name: '', email: '', password: '', isRegister: true };
 
   const initialTypes = {
@@ -157,6 +158,34 @@ const Login = () => {
       </div>
     </Fragment>
   );
+};
+
+Login.propTypes = {
+  password: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    pattern: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+  }),
+  email: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    pattern: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+  }),
+  name: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    pattern: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+  }),
+  controlTheInput: PropTypes.func,
+  signUp: PropTypes.func,
+  login: PropTypes.func,
+  switchForm: PropTypes.func,
 };
 
 export default Login;

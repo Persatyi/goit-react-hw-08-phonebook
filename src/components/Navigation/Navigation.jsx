@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { logOut } from 'redux/contacts-thunk';
 import { RiLogoutBoxRLine } from 'react-icons/ri';
 import { AiOutlineUser } from 'react-icons/ai';
+import PropTypes from 'prop-types';
 
 const Navigation = () => {
   const dispatch = useDispatch();
@@ -23,6 +24,11 @@ const Navigation = () => {
       </button>
     </nav>
   );
+};
+
+Navigation.propTypes = {
+  email: PropTypes.string,
+  logout: PropTypes.func,
 };
 
 export default Navigation;

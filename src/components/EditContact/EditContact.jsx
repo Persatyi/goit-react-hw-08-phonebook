@@ -5,6 +5,7 @@ import { getContact } from 'redux/selectors';
 import { edit } from 'redux/contacts-slice';
 import { editContact } from 'redux/contacts-thunk';
 import data from 'db/input.json';
+import PropTypes from 'prop-types';
 
 const EditContact = () => {
   const contact = useSelector(state => getContact(state));
@@ -96,6 +97,26 @@ const EditContact = () => {
       </form>
     </div>
   );
+};
+
+EditContact.propTypes = {
+  saveChanges: PropTypes.func,
+  controlTheInput: PropTypes.func,
+  cancelEdit: PropTypes.func,
+  number: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    pattern: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+  }),
+  name: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    pattern: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+  }),
 };
 
 export default EditContact;

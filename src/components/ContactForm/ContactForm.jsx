@@ -72,36 +72,40 @@ export default function ContactForm() {
 
   const keysArr = Object.keys(initialState);
   return (
-    <form className={s.form} onSubmit={addContactOnSubmit}>
-      {keysArr.map(key => {
-        const { id, type, name, pattern, title } = data[key];
-        return (
-          <Fragment key={id}>
-            <label className={s.label} htmlFor={id}>
-              {name}
-            </label>
-            <input
-              onChange={controlTheInput}
-              value={state[key]}
-              id={id}
-              className={s.input}
-              type={type}
-              name={name}
-              pattern={pattern}
-              title={title}
-              required
-            />
-          </Fragment>
-        );
-      })}
-      <button className={s.button} type="submit">
-        Add contact
-      </button>
-    </form>
+    <>
+      <h1 className="title">Phonebook</h1>
+      <form className={s.form} onSubmit={addContactOnSubmit}>
+        {keysArr.map(key => {
+          const { id, type, name, pattern, title } = data[key];
+          return (
+            <Fragment key={id}>
+              <label className={s.label} htmlFor={id}>
+                {name}
+              </label>
+              <input
+                onChange={controlTheInput}
+                value={state[key]}
+                id={id}
+                className={s.input}
+                type={type}
+                name={name}
+                pattern={pattern}
+                title={title}
+                required
+              />
+            </Fragment>
+          );
+        })}
+        <button className={s.button} type="submit">
+          Add contact
+        </button>
+      </form>
+    </>
   );
 }
 
 ContactForm.propTypes = {
+  controlTheInput: PropTypes.func,
   addContactOnSubmit: PropTypes.func,
   keysArr: PropTypes.arrayOf(
     PropTypes.shape({

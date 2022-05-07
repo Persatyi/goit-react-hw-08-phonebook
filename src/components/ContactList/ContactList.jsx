@@ -60,6 +60,8 @@ export default function ContactList() {
 }
 
 ContactList.propTypes = {
+  editItem: PropTypes.func,
+  deleteItem: PropTypes.func,
   contacts: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string.isRequired,
