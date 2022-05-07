@@ -70,5 +70,4 @@ ContactList.propTypes = {
       email: PropTypes.string.isRequired,
     })
   ),
-  deleteItem: PropTypes.func,
 };
